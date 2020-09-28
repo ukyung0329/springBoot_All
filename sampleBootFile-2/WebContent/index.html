@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+<h1>Upload file</h1>
+
+<form id="upload_file_frm">
+	<input type="file" id="uploadFile" name="uploadFile">
+	<button type="button" id="upload_file_btn">Upload</button>	
+</form>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	$("#upload_file_btn").click(function(){
+		
+		$.ajax({
+			url:"http://localhost:3000/fileUpload",
+			type:"POST",
+			data: new FormData( $("#upload_file_frm")[0] ),
+			enctype: 'multipart/form-data',
+			processData:false,
+			contentType:false,
+			cache:false,
+			success:function(data){
+				alert(data);
+			},
+			error:function(){
+				alert("error");	
+			}			
+		});		
+	});	
+	
+});
+
+</script>
+
+<br>
+
+<h1>Down load</h1>
+p.png: <button type="button" id="download">Download</button>
+
+<script type="text/javascript">
+
+$("#download").click(function(){
+	
+	/*
+	$.ajax({
+		url:"http://localhost:3000/download",
+		type:"GET",
+		data:{ fileName:"1.png" },
+		success:function(){
+			alert("success");
+		},
+		error:function(){
+			alert("error");
+		}
+	});
+	*/
+	
+	location.href = "http://localhost:3000/download?fileName=" + "1.png";
+	
+});
+
+</script> 
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
