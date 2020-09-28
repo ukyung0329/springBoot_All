@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Bbs Detail</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script type="text/javascript">
+	let urlParams = location.search.split(/[?&]/).slice(1).map(function(paramPair) {
+		
+		    return paramPair.split(/=(.+)?/).slice(0, 2);
+		    
+		}).reduce(function(obj, pairArray) {
+			
+		    obj[pairArray[0]] = pairArray[1];
+		    return obj;
+		}, 
+		{
+			
+	});
+</script>
+</head>
+<body>
+
+<script type="text/javascript">
+	let seq = urlParams.seq;
+	alert("seq = " + seq);
+	
+	$.ajax({
+		url:"http://localhost:9000/getBbs",
+		type:"get",
+		data:{ "seq":seq },
+		success:function(bbs){
+			//alert("getbbs");
+			
+		},
+		error:function(){
+			alert("fail~z");
+		}
+	});
+</script>
+
+</body>
+</html>

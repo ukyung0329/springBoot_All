@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style type="text/css">
+#app{
+	margin: auto;
+	margin-top: 60px;
+	width: 60%;
+	border: 3px solid #f2f2f2;
+	padding: 10px;	
+}
+</style>
+</head>
+<body>
+
+<h1>Account</h1>
+
+<div id="app">
+	<form id="frm">
+		<table border="1">
+			<tr>
+				<td>ID</td>
+				<td>
+					<input type="text" id="id" placeholder="아이디를 입력해주세요" size="20">
+					<p id="idcheck"></p>
+					<button type="button" id="idcheckbtn" name="id">중복확인</button>
+				</td>
+			</tr>
+			<tr>
+				<td>PWD</td>
+				<td>
+					<input type="text" id="pwd" name="pwd" placeholder="pwd를 입력해주세요" size="20">
+				</td>
+			</tr>
+			<tr>
+				<td>NAME</td>
+				<td>
+					<input type="text" id="name" name="name" placeholder="name를 입력해주세요" size="20">
+				</td>
+			</tr>
+			<tr>
+				<td>EMAIL</td>
+				<td>
+					<input type="text" id="email" name="email" placeholder="email를 입력해주세요" size="20">
+				</td>
+			</tr>
+	
+			<tr>
+				<td colspan="2">
+					<button type="button" id="account">회원가입</button>
+				</td>
+			</tr>
+		</table>
+	</form>	
+</div>
+
+
+
+
+<script type="text/javascript">
+$("#idcheckbtn").click(function(){
+	//alert("click");
+	
+	$.ajax({
+		url:"http://localhost:9000/getId",
+		type:"post",
+		data:{"id":$("#id").val()},
+		success:function(data){
+			//alert("good");
+			if(data.trim() == "YES"){
+				$("#idcheck").html("사용 할 수 있는 ID입니다");
+			}else{
+				$("#idcheck").html("사용중인 ID입니다");
+				$("#id").val();
+			}
+		},
+		error:function(){
+			alert("fail");
+		}
+	});	
+});
+
+$("#account").click(function(){
+	
+	var params = $("#frm").serialize();//form 아이디의 name으로 보
+	
+	$.ajax({
+		url:"http://localhost:9000/account",
+		type:"post",
+		//data:{id:$("#id").val()...}
+		data:params,
+		success:function(data){
+			alert("good");
+			
+			if(data.trim() == "YES"){
+				alert("회원가입을 축하합니다~ ");
+				location.href = "login.html";
+			}else{
+				alert("회원가입에 실패했습니다 ㅠ ");
+			}
+		},
+		error:function(){
+			alert("fail");
+		}
+	});
+});
+</script>
+
+
+</body>
+</html>
